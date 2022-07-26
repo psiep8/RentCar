@@ -26,6 +26,8 @@ public class HelloServlet extends HttpServlet {
             System.out.println(temp.getNome());
         }
 
+        utenteDAO.getUtenteById(1);
+
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
