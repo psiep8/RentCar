@@ -6,7 +6,20 @@ import com.rentalcar.rentcar.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class UtenteDAO {
+
+    @PersistenceContext
+    protected EntityManager entityManager;
+
     public void saveUtente(Utente utente) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -23,10 +36,16 @@ public class UtenteDAO {
             e.printStackTrace();
         }
     }
+
+    public List<Utente> getUtenti() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Utente", Utente.class).list();
+        }
+    }
+}
 /*
     public List<Utente> getUtenti() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from utente", Utente.class).list();
         }
     }*/
-}

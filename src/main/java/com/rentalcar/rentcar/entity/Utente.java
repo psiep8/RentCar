@@ -26,7 +26,6 @@ public class Utente {
     private String telefono;
 
 
-
     @Column(name = "dataNascita")
     private LocalDate dataNascita;
 
