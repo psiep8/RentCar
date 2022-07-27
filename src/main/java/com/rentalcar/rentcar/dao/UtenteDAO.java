@@ -43,7 +43,7 @@ public class UtenteDAO {
         }
     }
 
-    public void getUtenteById(int id) {
+    public String getUtenteById(int id) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
