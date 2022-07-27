@@ -72,52 +72,12 @@ public class UtenteDAO {
     }
 
     public List<Utente> getUtenti() {
-        {
-            Transaction transaction = null;
-            List<Utente> utente = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                // start a transaction
-                transaction = session.beginTransaction();
-
-
-                utente = session.createQuery("from Utente").getResultList();
-
-
-                // commit transaction
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-
-            }
-            return utente;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Utente where customer is true", Utente.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
-    /*public List<Utente> getUtenteCustomer(boolean customer) {
-        Transaction transaction = null;
-        List<Utente> utente = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
-            transaction = session.beginTransaction();
-
-            utente=session.createQuery("from Utente").getResultList();
-
-            // commit transaction
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-        }
-        return utente;
-    }*/
 }
-/*
-    public List<Utente> getUtenti() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from utente", Utente.class).list();
-        }
-    }*/

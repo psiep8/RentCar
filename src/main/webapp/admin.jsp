@@ -18,7 +18,7 @@
 </head>
 <body>
 <div align="center">
-    <form action="UtenteServlet" method="post">
+    <form action="UtenteServlet" method="get">
         <h1 align="center">Lista utenti:
         </h1>
         <div align="center">
@@ -32,15 +32,15 @@
                     <th>Data Di Nascita</th>
                 </tr>
             </table>
-            <input type="submit" value="Visualizza">
+
             <table>
                 <c:forEach var="user" items="${utenti}">
                     <tr>
-                        <td><c:out value="${utenti.id}"/></td>
-                        <td><c:out value="${utenti.nome}"/></td>
-                        <td><c:out value="${utenti.cognome}"/></td>
-                        <td><c:out value="${utenti.email}"/></td>
-                        <td><c:out value="${utenti.dataNascita}"/></td>
+                        <td><c:out value="${user.id}"/></td>
+                        <td><c:out value="${user.nome}"/></td>
+                        <td><c:out value="${user.cognome}"/></td>
+                        <td><c:out value="${user.email}"/></td>
+                        <td><c:out value="${user.dataNascita}"/></td>
                         <td>
                             <a href="edit?id=<c:out value='${user.id}' />">Modifica</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
