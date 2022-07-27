@@ -7,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
 <head>
@@ -18,11 +18,41 @@
 </head>
 <body>
 <div align="center">
-    <form action="UtenteServlet" method="get">
+    <form action="UtenteServlet" method="post">
         <h1 align="center">Lista utenti:
         </h1>
+        <div align="center">
+            <table border="1" cellpadding="5">
+                <caption><h2>List of Users</h2></caption>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Email</th>
+                    <th>Data Di Nascita</th>
+                </tr>
+            </table>
+            <input type="submit" value="Visualizza">
+            <table>
+                <c:forEach var="user" items="${utenti}">
+                    <tr>
+                        <td><c:out value="${utenti.id}"/></td>
+                        <td><c:out value="${utenti.nome}"/></td>
+                        <td><c:out value="${utenti.cognome}"/></td>
+                        <td><c:out value="${utenti.email}"/></td>
+                        <td><c:out value="${utenti.dataNascita}"/></td>
+                        <td>
+                            <a href="edit?id=<c:out value='${user.id}' />">Modifica</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="delete?id=<c:out value='${user.id}' />">Cancella</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="delete?id=<c:out value='${user.id}' />">Visualizza prenotazioni</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
 
-        <input type="submit" value="Visualizza">
     </form>
 </div>
 </body>

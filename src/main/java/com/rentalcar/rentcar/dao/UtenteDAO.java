@@ -25,7 +25,7 @@ public class UtenteDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            // save the student object
+
             session.save(utente);
             // commit transaction
             transaction.commit();
@@ -37,21 +37,72 @@ public class UtenteDAO {
         }
     }
 
-    public List<Utente> getUtenti() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Utente", Utente.class).list();
-        }
-    }
-
-    public Utente getUtenteById(int id) {
+    public void updateUtente(Utente utente) {
         Transaction transaction = null;
-        Utente utente = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
 
-            // Obtain an entity using byId() method
+            session.saveOrUpdate(utente);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+    }
+
+    public void deleteUtente(long id) {
+        Transaction transaction = null;
+        Utente utente;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
             utente = session.get(Utente.class, id);
+
+            session.delete(utente);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+    }
+
+    public List<Utente> getUtenti() {
+        {
+            Transaction transaction = null;
+            List<Utente> utente = null;
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                // start a transaction
+                transaction = session.beginTransaction();
+
+
+                utente = session.createQuery("from Utente").getResultList();
+
+
+                // commit transaction
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+
+            }
+            return utente;
+        }
+    }
+
+    /*public List<Utente> getUtenteCustomer(boolean customer) {
+        Transaction transaction = null;
+        List<Utente> utente = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            utente=session.createQuery("from Utente").getResultList();
 
             // commit transaction
             transaction.commit();
@@ -62,7 +113,7 @@ public class UtenteDAO {
 
         }
         return utente;
-    }
+    }*/
 }
 /*
     public List<Utente> getUtenti() {
