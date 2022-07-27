@@ -43,16 +43,15 @@ public class UtenteDAO {
         }
     }
 
-    public String getUtenteById(int id) {
+    public Utente getUtenteById(int id) {
         Transaction transaction = null;
+        Utente utente = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
 
             // Obtain an entity using byId() method
-            Utente utente = session.byId(Utente.class).getReference(id);
-            System.out.println(utente.getNome());
-            System.out.println(utente.getEmail());
+            utente = session.get(Utente.class, id);
 
             // commit transaction
             transaction.commit();
@@ -60,8 +59,9 @@ public class UtenteDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
+
         }
+        return utente;
     }
 }
 /*

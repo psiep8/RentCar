@@ -26,7 +26,7 @@ public class HelloServlet extends HttpServlet {
             System.out.println(temp.getNome());
         }
 
-        //utenteDAO.getUtenteById(1);
+        System.out.println(utenteDAO.getUtenteById(1));
 
     }
 
