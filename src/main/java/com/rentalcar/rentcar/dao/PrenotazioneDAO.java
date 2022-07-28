@@ -7,6 +7,8 @@ import com.rentalcar.rentcar.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class PrenotazioneDAO {
     public void savePrenotazione(Prenotazione prenotazione) {
         Transaction transaction = null;
@@ -57,5 +59,14 @@ public class PrenotazioneDAO {
                 transaction.rollback();
             }
         }
+    }
+
+    public List<Prenotazione> getPrenotazioni() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Prenotazione", Prenotazione.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

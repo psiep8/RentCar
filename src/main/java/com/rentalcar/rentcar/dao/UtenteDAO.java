@@ -60,8 +60,9 @@ public class UtenteDAO {
             // start a transaction
             transaction = session.beginTransaction();
             utente = session.get(Utente.class, id);
-
-            session.delete(utente);
+            if (utente != null) {
+                session.delete(utente);
+            }
             // commit transaction
             transaction.commit();
         } catch (Exception e) {

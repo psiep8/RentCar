@@ -19,36 +19,45 @@
 <body>
 <div align="center">
     <form action="UtenteServlet" method="get">
+        <input type="submit" value="Inserisci Prenotazione" name="inserisci">
         <h1 align="center">Lista utenti:
         </h1>
         <div align="center">
             <table border="1" cellpadding="5">
-                <caption><h2>List of Users</h2></caption>
                 <tr>
-                    <th>ID</th>
+
+                    <input type="search" id="search-input" placeholder="Filtra qui...">
+                    <button id="search">Search</button>
+
+                </tr>
+                <tr>
                     <th>Nome</th>
                     <th>Cognome</th>
                     <th>Email</th>
+                    <th>Telefono</th>
                     <th>Data Di Nascita</th>
+                    <th>Operazioni</th>
                 </tr>
-            </table>
 
-            <table>
-                <c:forEach var="user" items="${utenti}">
-                    <tr>
-                        <td><c:out value="${user.id}"/></td>
-                        <td><c:out value="${user.nome}"/></td>
-                        <td><c:out value="${user.cognome}"/></td>
-                        <td><c:out value="${user.email}"/></td>
-                        <td><c:out value="${user.dataNascita}"/></td>
-                        <td>
-                            <a href="edit?id=<c:out value='${user.id}' />">Modifica</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="delete?id=<c:out value='${user.id}' />">Cancella</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="delete?id=<c:out value='${user.id}' />">Visualizza prenotazioni</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <c:forEach var="user" items="${utenti}">
+                    <th><c:out value="${user.nome}"/></th>
+                    <th><c:out value="${user.cognome}"/></th>
+                    <th><c:out value="${user.email}"/></th>
+                    <th><c:out value="${user.telefono}"/></th>
+                    <th><c:out value="${user.dataNascita}"/></th>
+                    <th>
+                        <a href="<c:url value="UtenteServlet">
+                            <c:param name="update" value="id"/>
+                        </c:url>"> Modifica</a>
+                        <a href="<c:url value="UtenteServlet">
+                            <c:param name="view" value="id"/>
+                        </c:url>"> Visualizza Prenotazioni</a>
+                        <a href="<c:url value="UtenteServlet">
+                            <c:param name="delete" value="id"/>
+                        </c:url>"> Cancella</a>
+                    </th>
+                </tr>
                 </c:forEach>
             </table>
         </div>
