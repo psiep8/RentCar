@@ -9,12 +9,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Modifica campi</title>
+    <title>Inserimento campi</title>
 </head>
 
 <body>
 <center>
-    <h1>Modifica Campi</h1>
+    <h1>Inserimento Campi</h1>
 </center>
 <div align="center">
 
@@ -24,18 +24,11 @@
             <caption>
                 <h2>
 
-                    Modifica Utente
+
+                    Inserimento nuovo utente
 
                 </h2>
             </caption>
-            <tr>
-                <th>ID:</th>
-                <td>
-                    <input type="text" name="id" size="45"
-                           value="<c:out value='${user.id}' />"
-                    />
-                </td>
-            </tr>
             <tr>
                 <th>Nome:</th>
                 <td>
@@ -86,7 +79,7 @@
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    <input type="submit" value="/update" name="action"/>
+                    <input type="submit" value="/insert" name="action" onclick="alert('Inserimento utente effettuato')"/>
                 </td>
             </tr>
         </table>

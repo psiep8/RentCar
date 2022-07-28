@@ -1,6 +1,7 @@
 package com.rentalcar.rentcar.dao;
 
 
+import com.rentalcar.rentcar.entity.Prenotazione;
 import com.rentalcar.rentcar.entity.Utente;
 import com.rentalcar.rentcar.util.HibernateUtil;
 import org.hibernate.Session;
@@ -25,7 +26,7 @@ public class UtenteDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-
+            // save the student object
             session.save(utente);
             // commit transaction
             transaction.commit();
@@ -43,17 +44,18 @@ public class UtenteDAO {
             // start a transaction
             transaction = session.beginTransaction();
 
-            session.saveOrUpdate(utente);
+            session.update(utente);
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 
-    public void deleteUtente(long id) {
+    public void deleteUtente(int id) {
         Transaction transaction = null;
         Utente utente;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -79,6 +81,26 @@ public class UtenteDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Utente getUser(int id) {
+
+        Transaction transaction = null;
+        Utente user = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            user = session.get(Utente.class, id);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return user;
     }
 
 }

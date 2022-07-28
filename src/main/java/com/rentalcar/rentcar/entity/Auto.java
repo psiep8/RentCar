@@ -35,6 +35,13 @@ public class Auto {
         this.modello = modello;
     }
 
+    public Auto(int id, String marca, int cilindrata, String modello) {
+        this.id = id;
+        this.marca = marca;
+        this.cilindrata = cilindrata;
+        this.modello = modello;
+    }
+
     public List<Prenotazione> getItems() {
         return items;
     }

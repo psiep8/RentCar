@@ -38,6 +38,13 @@ public class Prenotazione {
         this.approvata = approvata;
     }
 
+    public Prenotazione(int id, LocalDate dataInizio, LocalDate dataFine, boolean approvata) {
+        this.id = id;
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
+        this.approvata = approvata;
+    }
+
     public Auto getAuto() {
         return auto;
     }

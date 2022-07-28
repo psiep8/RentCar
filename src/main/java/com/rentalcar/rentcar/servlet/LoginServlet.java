@@ -23,6 +23,11 @@ public class LoginServlet extends HttpServlet {
 
         if (username.equals("admin") && password.equals("admin"))
             response.sendRedirect("UtenteServlet");
-        else response.sendRedirect("home.jsp");
+        else if(username.equals("admin") && !password.equals("admin"))
+            response.sendRedirect("Error.jsp");
+        else response.sendRedirect("PrenotazioneServlet");
+
+
+
     }
 }

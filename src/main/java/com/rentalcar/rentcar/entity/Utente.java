@@ -38,6 +38,16 @@ public class Utente {
     public Utente() {
     }
 
+    public Utente(int id, String nome, String cognome, String email, String telefono, LocalDate dataNascita, boolean customer) {
+        this.id = id;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.telefono = telefono;
+        this.dataNascita = dataNascita;
+        this.customer = customer;
+    }
+
     public Utente(String nome, String cognome, String email, String telefono, LocalDate dataNascita, boolean customer) {
         this.nome = nome;
         this.cognome = cognome;
@@ -113,14 +123,6 @@ public class Utente {
 
     @Override
     public String toString() {
-        return "Utente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
-                ", email='" + email + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", dataNascita=" + dataNascita +
-                ", customer=" + customer +
-                '}';
+        return "Utente{" + "id=" + id + ", nome='" + nome + '\'' + ", cognome='" + cognome + '\'' + ", email='" + email + '\'' + ", telefono='" + telefono + '\'' + ", dataNascita=" + dataNascita + ", customer=" + customer + '}';
     }
 }

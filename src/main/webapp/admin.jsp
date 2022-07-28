@@ -18,19 +18,29 @@
 </head>
 <body>
 <div align="center">
-    <form action="UtenteServlet" method="get">
-        <input type="submit" value="Inserisci Prenotazione" name="inserisci">
+    <form action="UtenteServlet" method="GET">
+        <input type="submit" value="/new" name="action">
         <h1 align="center">Lista utenti:
         </h1>
         <div align="center">
             <table border="1" cellpadding="5">
                 <tr>
+                    Campo per il filtraggio: <select>
+                    <option>ID</option>
+                    <option>Nome</option>
+                    <option>Cognome</option>
+                    <option>Email</option>
+                    <option>Telefono</option>
+                    <option>Data di Nascita</option>
 
+                </select>
                     <input type="search" id="search-input" placeholder="Filtra qui...">
-                    <button id="search">Search</button>
+                    <button id="search">Cerca</button>
 
                 </tr>
+                </br></br>
                 <tr>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Cognome</th>
                     <th>Email</th>
@@ -41,6 +51,7 @@
 
                 <tr>
                     <c:forEach var="user" items="${utenti}">
+                    <th><c:out value="${user.id}"/></th>
                     <th><c:out value="${user.nome}"/></th>
                     <th><c:out value="${user.cognome}"/></th>
                     <th><c:out value="${user.email}"/></th>
@@ -48,13 +59,15 @@
                     <th><c:out value="${user.dataNascita}"/></th>
                     <th>
                         <a href="<c:url value="UtenteServlet">
-                            <c:param name="update" value="id"/>
+                            <c:param name="action" value="/edit"/>
+                            <c:param name="id" value="${user.id}"/>
                         </c:url>"> Modifica</a>
                         <a href="<c:url value="UtenteServlet">
                             <c:param name="view" value="id"/>
                         </c:url>"> Visualizza Prenotazioni</a>
                         <a href="<c:url value="UtenteServlet">
-                            <c:param name="delete" value="id"/>
+                            <c:param name="action" value="/delete"/>
+                            <c:param name="id" value="${user.id}"/>
                         </c:url>"> Cancella</a>
                     </th>
                 </tr>

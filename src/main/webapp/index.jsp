@@ -21,7 +21,7 @@
         Password: <input type="text" name="password">
         </br></br>
 
-        <input type="submit" , value="Accedi">
+        <input type="submit", value="Accedi">
 
     </form>
 </div>

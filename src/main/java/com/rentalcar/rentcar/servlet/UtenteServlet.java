@@ -19,14 +19,23 @@ public class UtenteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getServletPath();
+        String action = "";
+        if (request.getParameter("action") != null) {
+            action = request.getParameter("action");
+        }
         try {
             switch (action) {
+                case "/new":
+                    showNewForm(request, response);
+                    break;
                 case "/insert":
                     insertUser(request, response);
                     break;
                 case "/delete":
                     deleteUser(request, response);
+                    break;
+                case "/edit":
+                    showEditForm(request, response);
                     break;
                 case "/update":
                     updateUser(request, response);
@@ -38,6 +47,22 @@ public class UtenteServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("insert-form.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Utente existingUser = utenteDAO.getUser(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("edit-form.jsp");
+        request.setAttribute("user", existingUser);
+        dispatcher.forward(request, response);
+
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -56,11 +81,12 @@ public class UtenteServlet extends HttpServlet {
         boolean customer = Boolean.parseBoolean(request.getParameter("customer"));
         Utente utente = new Utente(nome, cognome, email, telefono, LocalDate.parse(date), customer);
         utenteDAO.saveUtente(utente);
-        response.sendRedirect("edit-form.jsp");
+        response.sendRedirect("UtenteServlet");
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
@@ -68,9 +94,9 @@ public class UtenteServlet extends HttpServlet {
         String date = request.getParameter("date");
         boolean customer = Boolean.parseBoolean(request.getParameter("customer"));
 
-        Utente utente = new Utente(nome, cognome, email, telefono, LocalDate.parse(date), customer);
+        Utente utente = new Utente(id, nome, cognome, email, telefono, LocalDate.parse(date), customer);
         utenteDAO.updateUtente(utente);
-        response.sendRedirect("edit-form.jsp");
+        response.sendRedirect("UtenteServlet");
     }
 
     private void listUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,6 +109,6 @@ public class UtenteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 }

@@ -33,7 +33,7 @@ public class PrenotazioneDAO {
             // start a transaction
             transaction = session.beginTransaction();
 
-            session.saveOrUpdate(prenotazione);
+            session.update(prenotazione);
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
@@ -43,7 +43,7 @@ public class PrenotazioneDAO {
         }
     }
 
-    public void deletePrenotazione(long id) {
+    public void deletePrenotazione(int id) {
         Transaction transaction = null;
         Prenotazione prenotazione;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -63,10 +63,30 @@ public class PrenotazioneDAO {
 
     public List<Prenotazione> getPrenotazioni() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Prenotazione", Prenotazione.class).list();
+            return session.createQuery("from Prenotazione where approvata=true", Prenotazione.class).list();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Prenotazione getPrenotazione(int id) {
+
+        Transaction transaction = null;
+        Prenotazione prenotazione = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            prenotazione = session.get(Prenotazione.class, id);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return prenotazione;
     }
 }
