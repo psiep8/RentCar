@@ -1,6 +1,8 @@
 package com.rentalcar.rentcar.servlet;
 
+import com.rentalcar.rentcar.dao.AutoDAO;
 import com.rentalcar.rentcar.dao.PrenotazioneDAO;
+import com.rentalcar.rentcar.entity.Auto;
 import com.rentalcar.rentcar.entity.Prenotazione;
 import com.rentalcar.rentcar.entity.Utente;
 
@@ -10,12 +12,16 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @WebServlet(name = "PrenotazioneServlet", value = "/PrenotazioneServlet")
 public class PrenotazioneServlet extends HttpServlet {
 
     private PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAO();
+    private AutoDAO autoDAO = new AutoDAO();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,6 +46,9 @@ public class PrenotazioneServlet extends HttpServlet {
                 case "/update":
                     updatePrenotazione(request, response);
                     break;
+                case"/listauto":
+                    listAuto(request,response);
+                    break;
                 default:
                     listPrenotazioni(request, response);
                     break;
@@ -47,6 +56,13 @@ public class PrenotazioneServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void listAuto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Auto> auto = autoDAO.getAuto();
+        request.setAttribute("auto", auto);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("list-auto-utenti.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
@@ -67,8 +83,15 @@ public class PrenotazioneServlet extends HttpServlet {
 
     private void deletePrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        prenotazioneDAO.deletePrenotazione(id);
-        response.sendRedirect("PrenotazioneServlet");
+        LocalDate dataInizio = prenotazioneDAO.getPrenotazione(id).getDataInizio();
+        if (dataInizio.until(LocalDate.now(), ChronoUnit.DAYS) > 2) {
+            //dao getbyid , controllo prenotazione non nulla, controllo data prenotazione almeno da due giorni, deletebyid
+            prenotazioneDAO.deletePrenotazione(id);
+            response.sendRedirect("PrenotazioneServlet");
+
+        } else {
+            throw new IOException("Errore, non è possibile cancellare entro due giorni dalla prenotazione");
+        }
     }
 
     private void insertPrenotazione(HttpServletRequest request, HttpServletResponse response)
@@ -88,8 +111,10 @@ public class PrenotazioneServlet extends HttpServlet {
         String dataFine = request.getParameter("dataFine");
         boolean approvata = Boolean.parseBoolean(request.getParameter("approvata"));
         Prenotazione prenotazione = new Prenotazione(id, LocalDate.parse(dataInizio), LocalDate.parse(dataFine), approvata);
-        prenotazioneDAO.savePrenotazione(prenotazione);
+        prenotazioneDAO.updatePrenotazione(prenotazione);
         response.sendRedirect("PrenotazioneServlet");
+
+
     }
 
     private void listPrenotazioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -7,15 +7,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" type="text/css" href="header.css">
 <html>
 <head>
     <title>Inserimento campi</title>
+    <center>
+        <h1>Inserimento Campi</h1>
+    </center>
+    </br></br>
+    <div id="left"><b><a href="<c:url value="UtenteServlet"/>"> Homepage</a></b></div>
+    <div id="center"><b><a href="<c:url value="list-auto.jsp"/>">Parco Auto</a></b></div>
+    <div id="right"><b>Profilo Utente</b></div>
+    <br/><br/>
 </head>
 
 <body>
-<center>
-    <h1>Inserimento Campi</h1>
-</center>
+
 <div align="center">
 
     <form action="UtenteServlet" method="GET">

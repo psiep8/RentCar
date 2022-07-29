@@ -1,11 +1,15 @@
 package com.rentalcar.rentcar.servlet;
 
 import com.rentalcar.rentcar.dao.UtenteDAO;
+import com.rentalcar.rentcar.entity.Prenotazione;
 import com.rentalcar.rentcar.entity.Utente;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -40,6 +44,9 @@ public class UtenteServlet extends HttpServlet {
                 case "/update":
                     updateUser(request, response);
                     break;
+                case "/view":
+                    listPrenotazioni(request, response);
+                    break;
                 default:
                     listUser(request, response);
                     break;
@@ -47,6 +54,16 @@ public class UtenteServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    // @Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    private void listPrenotazioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Utente utente = utenteDAO.getUser(id);
+        List<Prenotazione> list = utente.getItems();
+        request.setAttribute("list", list);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)

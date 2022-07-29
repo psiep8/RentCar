@@ -25,69 +25,45 @@
 
 <div align="center">
 
-    <form action="UtenteServlet" method="GET">
+    <form action="AutoServlet" method="GET">
 
         <table border="1" cellpadding="5">
             <caption>
                 <h2>
 
-                    Modifica Utente
+                    Modifica auto
 
                 </h2>
             </caption>
             <tr>
                 <th>ID:</th>
                 <td>
-                    <input type="text" name="id" size="45"
-                           value="<c:out value='${user.id}' />"
+                    <input type="text" name="id" size="10"
+                           value="<c:out value='${autoex.id}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>Nome:</th>
+                <th>Marca:</th>
                 <td>
-                    <input type="text" name="nome" size="45"
-                           value="<c:out value='${user.nome}' />"
+                    <input type="text" name="marca" size="45"
+                           value="<c:out value='${autoex.marca}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>Cognome:</th>
+                <th>Cilindrata:</th>
                 <td>
-                    <input type="text" name="cognome" size="45"
-                           value="<c:out value='${user.cognome}' />"
+                    <input type="text" name="cilindrata" size="45"
+                           value="<c:out value='${autoex.cilindrata}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>Email:</th>
+                <th>Modello:</th>
                 <td>
-                    <input type="text" name="email" size="45"
-                           value="<c:out value='${user.email}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>Telefono:</th>
-                <td>
-                    <input type="text" name="telefono" size="15"
-                           value="<c:out value='${user.telefono}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>Data di nascita:</th>
-                <td>
-                    <input type="text" name="date" size="15"
-                           value="<c:out value='${user.dataNascita}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>Customer:</th>
-                <td>
-                    <input type="text" name="customer" size="10"
-                           value="<c:out value='${user.customer}' />"
+                    <input type="text" name="modello" size="45"
+                           value="<c:out value='${autoex.modello}' />"
                     />
                 </td>
             </tr>
@@ -101,4 +77,3 @@
 </div>
 </body>
 </html>
-

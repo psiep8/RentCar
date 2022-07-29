@@ -11,14 +11,13 @@
 <html>
 <head>
     <title>Inserimento campi</title>
-
     <center>
         <h1>Inserimento Campi</h1>
     </center>
     </br></br>
-    <div id="left"><b><a href="<c:url value="PrenotazioneServlet"/>"> Homepage</a></b></div>
-    <div id="center"><b><a href="<c:url value="list-auto-utenti.jsp"/>">Parco Auto</a></b></div>
-    <div id="right"><b><a href="<c:url value="edit-form.jsp"/>">Profilo Utente</a></b></div>
+    <div id="left"><b><a href="<c:url value="UtenteServlet"/>"> Homepage</a></b></div>
+    <div id="center"><b><a href="<c:url value="list-auto.jsp"/>">Parco Auto</a></b></div>
+    <div id="right"><b>Profilo Utente</b></div>
     <br/><br/>
 </head>
 
@@ -26,44 +25,43 @@
 
 <div align="center">
 
-    <form action="PrenotazioneServlet" method="GET">
+    <form action="AutoServlet" method="GET">
 
         <table border="1" cellpadding="5">
             <caption>
                 <h2>
 
-                    Inserimento Prenotazione
-
+                    Inserimento nuova auto
 
                 </h2>
             </caption>
             <tr>
-                <th>Data Inizio:</th>
+                <th>Marca:</th>
                 <td>
-                    <input type="text" name="dataInizio" size="15"
-                           value="<c:out value='${prenot.dataInizio}' />"
+                    <input type="text" name="marca" size="45"
+                           value="<c:out value='${autoex.marca}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>Data Fine:</th>
+                <th>Cilindrata:</th>
                 <td>
-                    <input type="text" name="dataFine" size="15"
-                           value="<c:out value='${prenot.approvata}' />"
+                    <input type="text" name="cilindrata" size="45"
+                           value="<c:out value='${autoex.cilindrata}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>Approvata:</th>
+                <th>Modello:</th>
                 <td>
-                    <input type="text" name="customer" size="10"
-                           value="<c:out value='${prenot.customer}' />"
+                    <input type="text" name="modello" size="45"
+                           value="<c:out value='${autoex.modello}' />"
                     />
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    <input type="submit" value="/insert" name="action" onclick="alert('Inserimento prenotazione effettuata')"/>
+                    <input type="submit" value="/insert" name="action" onclick="alert('Inserimento auto effettuata')"/>
                 </td>
             </tr>
         </table>

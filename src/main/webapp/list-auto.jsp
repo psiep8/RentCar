@@ -11,19 +11,19 @@
 <link rel="stylesheet" type="text/css" href="header.css">
 <html>
 <head>
-    <title>Homepage ADMIN</title>
-    <h1 align="center"><b>Homepage ADMIN</b></h1>
+    <title>Parco Auto</title>
+    <h1 align="center"><b>Parco Auto</b></h1>
     </br></br>
-    <div id="left"><b> Homepage</b></div>
-    <div id="center"><b><a href="<c:url value="AutoServlet"/>">Parco Auto</a></b></div>
+    <div id="left"><b><a href="<c:url value="UtenteServlet"/>"> Homepage</a></b></div>
+    <div id="center"><b>Parco Auto</b></div>
     <div id="right"><b>Profilo Utente</b></div>
     <br/><br/>
 </head>
 <body>
 <div align="center">
-    <form action="UtenteServlet" method="GET">
+    <form action="AutoServlet" method="GET">
         <input type="submit" value="/new" name="action">
-        <h1 align="center">Lista utenti:
+        <h1 align="center">Lista Auto:
         </h1>
         <div align="center">
             <table border="1" cellpadding="5">
@@ -44,35 +44,27 @@
                 </br></br>
                 <tr>
                     <th>ID</th>
-                    <th>Nome</th>
-                    <th>Cognome</th>
-                    <th>Email</th>
-                    <th>Telefono</th>
-                    <th>Data Di Nascita</th>
+                    <th>Marca</th>
+                    <th>Cilindrata</th>
+                    <th>Modello</th>
                     <th>Operazioni</th>
                 </tr>
 
                 <tr>
-                    <c:forEach var="user" items="${utenti}">
-                    <th><c:out value="${user.id}"/></th>
-                    <th><c:out value="${user.nome}"/></th>
-                    <th><c:out value="${user.cognome}"/></th>
-                    <th><c:out value="${user.email}"/></th>
-                    <th><c:out value="${user.telefono}"/></th>
-                    <th><c:out value="${user.dataNascita}"/></th>
+                    <c:forEach var="temp" items="${auto}">
+                    <th><c:out value="${temp.id}"/></th>
+                    <th><c:out value="${temp.marca}"/></th>
+                    <th><c:out value="${temp.cilindrata}"/></th>
+                    <th><c:out value="${temp.modello}"/></th>
                     <th>
-                        <a href="<c:url value="UtenteServlet">
+                        <a href="<c:url value="AutoServlet">
                             <c:param name="action" value="/edit"/>
-                            <c:param name="id" value="${user.id}"/>
+                            <c:param name="id" value="${temp.id}"/>
                         </c:url>">Modifica</a>
-                        <a href="<c:url value="UtenteServlet">
+                        <a href="<c:url value="AutoServlet">
                             <c:param name="action" value="/delete"/>
-                            <c:param name="id" value="${user.id}"/>
+                            <c:param name="id" value="${temp.id}"/>
                         </c:url>">Cancella</a>
-                        <a href="<c:url value="UtenteServlet">
-                            <c:param name="action" value="/view"/>
-                            <c:param name="id" value="${user.id}"/>
-                        </c:url>">Visualizza prenotazioni</a>
                     </th>
                 </tr>
                 </c:forEach>

@@ -32,7 +32,7 @@ public class Utente {
     @Column(name = "customer")
     private boolean customer;
 
-    @OneToMany(mappedBy = "utente")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "utente", cascade = CascadeType.ALL)
     private List<Prenotazione> items;
 
     public Utente() {

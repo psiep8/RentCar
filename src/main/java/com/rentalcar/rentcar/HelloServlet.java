@@ -48,16 +48,18 @@ public class HelloServlet extends HttpServlet {
         out.println("</body></html>");
 
         UtenteDAO utenteDAO = new UtenteDAO();
-        utenteDAO.saveUtente(new Utente("Giuseppe", "Romagnoli", "gr@gmail.com", "3271797913", LocalDate.of(1990, 7, 20), true));
-        utenteDAO.saveUtente(new Utente("Danilo", "Petta", "dp@gmail.com", "3271812006", LocalDate.of(1998, 02, 17), true));
+        //utenteDAO.saveUtente(new Utente("Giuseppe", "Romagnoli", "gr@gmail.com", "3271797913", LocalDate.of(1990, 7, 20), true));
+        utenteDAO.saveUtente(new Utente("Danilo", "Petta", "dp@gmail.com", "3271812006", LocalDate.of(1998, 2, 17), true));
+        utenteDAO.saveUtente(new Utente("Gabriele", "Diodato", "gp@gmail.com", "23139032", LocalDate.of(1999, 8, 20), true));
 
         PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAO();
-        prenotazioneDAO.savePrenotazione(new Prenotazione(LocalDate.of(2022, 05, 20), LocalDate.of(2022, 05, 30), true));
-        prenotazioneDAO.savePrenotazione(new Prenotazione(LocalDate.of(2022, 04, 29), LocalDate.of(2022, 05, 22), false));
+        //prenotazioneDAO.savePrenotazione(new Prenotazione(LocalDate.of(2022, 05, 20), LocalDate.of(2022, 05, 30), true));
+        //prenotazioneDAO.savePrenotazione(new Prenotazione(LocalDate.of(2022, 04, 29), LocalDate.of(2022, 05, 22), false));
+        //prenotazioneDAO.savePrenotazione(new Prenotazione(LocalDate.of(2022, 07, 29), LocalDate.of(2022, 07, 31), true));
 
         AutoDAO autoDAO = new AutoDAO();
-        autoDAO.saveAuto(new Auto("Renault", 90, "Captur"));
-        autoDAO.saveAuto(new Auto("Citroen", 110, "C3"));
+        //autoDAO.saveAuto(new Auto("Renault", 90, "Captur"));
+        //autoDAO.saveAuto(new Auto("Citroen", 110, "C3"));
 
 
     }

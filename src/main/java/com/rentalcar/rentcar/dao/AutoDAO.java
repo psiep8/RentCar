@@ -6,6 +6,8 @@ import com.rentalcar.rentcar.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class AutoDAO {
     public void saveAuto(Auto auto) {
         Transaction transaction = null;
@@ -40,7 +42,7 @@ public class AutoDAO {
         }
     }
 
-    public void deleteAuto(long id) {
+    public void deleteAuto(int id) {
         Transaction transaction = null;
         Auto auto;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -56,5 +58,34 @@ public class AutoDAO {
                 transaction.rollback();
             }
         }
+    }
+
+    public List<Auto> getAuto() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Auto", Auto.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Auto getAuto(int id) {
+
+        Transaction transaction = null;
+        Auto auto = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            auto = session.get(Auto.class, id);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return auto;
     }
 }

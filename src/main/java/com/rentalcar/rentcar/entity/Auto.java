@@ -22,7 +22,7 @@ public class Auto {
     @Column(name = "modello")
     private String modello;
 
-    @OneToMany(mappedBy = "auto")
+    @OneToMany(mappedBy = "auto", cascade = CascadeType.ALL)
     private List<Prenotazione> items;
 
     public Auto() {

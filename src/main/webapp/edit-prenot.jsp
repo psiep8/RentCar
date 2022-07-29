@@ -7,15 +7,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" type="text/css" href="header.css">
 <html>
 <head>
     <title>Modifica campi</title>
+    <center>
+        <h1>Modifica Campi</h1>
+    </center>
+    </br></br>
+    <div id="left"><b><a href="<c:url value="PrenotazioneServlet"/>"> Homepage</a></b></div>
+    <div id="center"><b><a href="<c:url value="list-auto-utenti.jsp"/>">Parco Auto</a></b></div>
+    <div id="right"><b><a href="<c:url value="edit-form.jsp"/>">Profilo Utente</a></b></div>
+    <br/><br/>
 </head>
 
 <body>
-<center>
-    <h1>Modifica Campi</h1>
-</center>
+
 <div align="center">
 
     <form action="PrenotazioneServlet" method="GET">
@@ -23,10 +30,7 @@
         <table border="1" cellpadding="5">
             <caption>
                 <h2>
-
                     Modifica Prenotazione
-
-
                 </h2>
             </caption>
             <tr>
