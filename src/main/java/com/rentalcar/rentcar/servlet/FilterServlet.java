@@ -34,7 +34,7 @@ public class FilterServlet extends HttpServlet {
         String parameter = request.getParameter("parametri");
         String text = request.getParameter("text");
         request.setAttribute("column", filterDAO.getColumn(parameter, text));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("UtenteServlet");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("filtered-admin.jsp");
         dispatcher.forward(request, response);
 
     }
