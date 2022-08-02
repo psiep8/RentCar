@@ -32,23 +32,18 @@ public class UtenteServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
-                case "/insert":
-                    insertUser(request, response);
-                    break;
                 case "/delete":
                     deleteUser(request, response);
                     break;
                 case "/edit":
                     showEditForm(request, response);
                     break;
+                case "/insert":
                 case "/update":
-                    updateUser(request, response);
+                    upsertUser(request, response);
                     break;
                 case "/view":
                     listPrenotazioni(request, response);
-                    break;
-                case"/filtered":
-                    filteredUtente(request,response);
                     break;
                 default:
                     listUser(request, response);
@@ -59,13 +54,6 @@ public class UtenteServlet extends HttpServlet {
         }
     }
 
-    private void filteredUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nome = request.getParameter("token");
-        utenteDAO.getUser(nome);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-        dispatcher.forward(request, response);
-
-    }
 
     // @Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     private void listPrenotazioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -99,29 +87,27 @@ public class UtenteServlet extends HttpServlet {
         response.sendRedirect("UtenteServlet");
     }
 
-    private void insertUser(HttpServletRequest request, HttpServletResponse response)
+    private void upsertUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        Integer id = null;
+        if (request.getParameter("id") != null) {
+            id = Integer.parseInt(request.getParameter("id"));
+        }
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
         String telefono = request.getParameter("telefono");
         String date = request.getParameter("date");
         boolean customer = Boolean.parseBoolean(request.getParameter("customer"));
-        Utente utente = new Utente(nome, cognome, email, telefono, LocalDate.parse(date), customer);
-        utenteDAO.saveUtente(utente);
-        response.sendRedirect("UtenteServlet");
-    }
-
-    private void updateUser(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
-        String email = request.getParameter("email");
-        String telefono = request.getParameter("telefono");
-        String date = request.getParameter("date");
-        boolean customer = Boolean.parseBoolean(request.getParameter("customer"));
-
+        if (id==null){
+            Utente utente = new Utente(nome, cognome, email, telefono, LocalDate.parse(date), customer);
+            utenteDAO.updateUtente(utente);
+            response.sendRedirect("UtenteServlet");
+        }else{
+            Utente utente = new Utente(id, nome, cognome, email, telefono, LocalDate.parse(date), customer);
+            utenteDAO.updateUtente(utente);
+            response.sendRedirect("UtenteServlet");
+        }
         Utente utente = new Utente(id, nome, cognome, email, telefono, LocalDate.parse(date), customer);
         utenteDAO.updateUtente(utente);
         response.sendRedirect("UtenteServlet");

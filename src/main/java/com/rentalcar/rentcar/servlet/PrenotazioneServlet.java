@@ -34,20 +34,18 @@ public class PrenotazioneServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
-                case "/insert":
-                    insertPrenotazione(request, response);
-                    break;
                 case "/delete":
                     deletePrenotazione(request, response);
                     break;
                 case "/edit":
                     showEditForm(request, response);
                     break;
+                case "/insert":
                 case "/update":
-                    updatePrenotazione(request, response);
+                    upsertPrenotazione(request, response);
                     break;
-                case"/listauto":
-                    listAuto(request,response);
+                case "/listauto":
+                    listAuto(request, response);
                     break;
 
                 default:
@@ -58,7 +56,6 @@ public class PrenotazioneServlet extends HttpServlet {
             throw new ServletException(ex);
         }
     }
-
 
 
     private void listAuto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -81,7 +78,6 @@ public class PrenotazioneServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("edit-prenot.jsp");
         request.setAttribute("prenot", existingPrenotazione);
         dispatcher.forward(request, response);
-
     }
 
     private void deletePrenotazione(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -97,27 +93,23 @@ public class PrenotazioneServlet extends HttpServlet {
         }
     }
 
-    private void insertPrenotazione(HttpServletRequest request, HttpServletResponse response)
+    private void upsertPrenotazione(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        Integer id = null;
+        if (request.getParameter("id") != null) {
+            id = Integer.parseInt(request.getParameter("id"));
+        }
         String dataInizio = request.getParameter("dataInizio");
         String dataFine = request.getParameter("dataFine");
         boolean approvata = Boolean.parseBoolean(request.getParameter("approvata"));
-        Prenotazione prenotazione = new Prenotazione(LocalDate.parse(dataInizio), LocalDate.parse(dataFine), approvata);
-        prenotazioneDAO.savePrenotazione(prenotazione);
+        if (id == null) {
+            Prenotazione prenotazione = new Prenotazione(LocalDate.parse(dataInizio), LocalDate.parse(dataFine), approvata);
+            prenotazioneDAO.savePrenotazione(prenotazione);
+        } else {
+            Prenotazione prenotazione = new Prenotazione(id, LocalDate.parse(dataInizio), LocalDate.parse(dataFine), approvata);
+            prenotazioneDAO.savePrenotazione(prenotazione);
+        }
         response.sendRedirect("PrenotazioneServlet");
-    }
-
-    private void updatePrenotazione(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String dataInizio = request.getParameter("dataInizio");
-        String dataFine = request.getParameter("dataFine");
-        boolean approvata = Boolean.parseBoolean(request.getParameter("approvata"));
-        Prenotazione prenotazione = new Prenotazione(id, LocalDate.parse(dataInizio), LocalDate.parse(dataFine), approvata);
-        prenotazioneDAO.updatePrenotazione(prenotazione);
-        response.sendRedirect("PrenotazioneServlet");
-
-
     }
 
     private void listPrenotazioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

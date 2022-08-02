@@ -34,17 +34,18 @@ public class AutoServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
-                case "/insert":
-                    insertAuto(request, response);
-                    break;
                 case "/delete":
                     deleteAuto(request, response);
                     break;
                 case "/edit":
                     showEditForm(request, response);
                     break;
+                case "/insert":
                 case "/update":
-                    updateAuto(request, response);
+                    upsertAuto(request, response);
+                    break;
+                case "/view":
+                    listPrenotazioni(request, response);
                     break;
                 default:
                     listAuto(request, response);
@@ -53,6 +54,15 @@ public class AutoServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void listPrenotazioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Auto auto = autoDAO.getAuto(id);
+        List<Prenotazione> list = auto.getItems();
+        request.setAttribute("list2", list);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-auto.jsp");
+        dispatcher.forward(request, response);
     }
 
 
@@ -78,26 +88,24 @@ public class AutoServlet extends HttpServlet {
         response.sendRedirect("AutoServlet");
     }
 
-    private void insertAuto(HttpServletRequest request, HttpServletResponse response)
+    private void upsertAuto(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        Integer id = null;
+        if (request.getParameter("id") != null) {
+            id = Integer.parseInt(request.getParameter("id"));
+        }
         String marca = request.getParameter("marca");
         int cilindrata = Integer.parseInt(request.getParameter("cilindrata"));
         String modello = request.getParameter("modello");
-
-        Auto auto = new Auto(marca, cilindrata, modello);
-        autoDAO.saveAuto(auto);
-        response.sendRedirect("AutoServlet");
-    }
-
-    private void updateAuto(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String marca = request.getParameter("marca");
-        int cilindrata = Integer.parseInt(request.getParameter("cilindrata"));
-        String modello = request.getParameter("modello");
-        Auto auto = new Auto(id,marca, cilindrata, modello);
-        autoDAO.updateAuto(auto);
-        response.sendRedirect("AutoServlet");
+        if (id == null) {
+            Auto auto = new Auto(marca, cilindrata, modello);
+            autoDAO.updateAuto(auto);
+            response.sendRedirect("AutoServlet");
+        } else {
+            Auto auto = new Auto(id, marca, cilindrata, modello);
+            autoDAO.updateAuto(auto);
+            response.sendRedirect("AutoServlet");
+        }
     }
 
     private void listAuto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

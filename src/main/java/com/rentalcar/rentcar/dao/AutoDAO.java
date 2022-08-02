@@ -9,31 +9,12 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class AutoDAO {
-    public void saveAuto(Auto auto) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
-            transaction = session.beginTransaction();
-            // save the student object
-            session.save(auto);
-            // commit transaction
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
 
     public void updateAuto(Auto auto) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
             transaction = session.beginTransaction();
-
             session.saveOrUpdate(auto);
-            // commit transaction
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -46,12 +27,9 @@ public class AutoDAO {
         Transaction transaction = null;
         Auto auto;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
             transaction = session.beginTransaction();
             auto = session.get(Auto.class, id);
-
             session.delete(auto);
-            // commit transaction
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -74,11 +52,8 @@ public class AutoDAO {
         Transaction transaction = null;
         Auto auto = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
             transaction = session.beginTransaction();
-            // get an user object
             auto = session.get(Auto.class, id);
-            // commit transaction
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

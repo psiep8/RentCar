@@ -22,34 +22,12 @@ import java.util.List;
 
 public class UtenteDAO {
 
-    @PersistenceContext
-    protected EntityManager entityManager;
-
-    public void saveUtente(Utente utente) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
-            transaction = session.beginTransaction();
-            // save the student object
-            session.save(utente);
-            // commit transaction
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
 
     public void updateUtente(Utente utente) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
             transaction = session.beginTransaction();
-
-            session.update(utente);
-            // commit transaction
+            session.saveOrUpdate(utente);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -63,13 +41,11 @@ public class UtenteDAO {
         Transaction transaction = null;
         Utente utente;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
             transaction = session.beginTransaction();
             utente = session.get(Utente.class, id);
             if (utente != null) {
                 session.delete(utente);
             }
-            // commit transaction
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -86,17 +62,13 @@ public class UtenteDAO {
         }
         return null;
     }
-
     public Utente getUser(int id) {
 
         Transaction transaction = null;
         Utente user = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
             transaction = session.beginTransaction();
-            // get an user object
             user = session.get(Utente.class, id);
-            // commit transaction
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -108,15 +80,11 @@ public class UtenteDAO {
     }
 
     public Utente getUser(String nome) {
-
         Transaction transaction = null;
         Utente user = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
             transaction = session.beginTransaction();
-            // get an user object
             user = session.get(Utente.class, nome);
-            // commit transaction
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

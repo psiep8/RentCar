@@ -22,9 +22,11 @@
 </head>
 <body>
 <div align="center">
-    <input type="submit" value="/new" name="action">
-    <h1 align="center">Lista utenti:
-    </h1>
+    <form action="UtenteServlet" method="GET">
+        <input type="submit" value="/new" name="action">
+        <h1 align="center">Lista utenti:
+        </h1>
+    </form>
     <div align="center">
         <table border="1" cellpadding="5">
             <form action="FilterServlet" method="POST">
@@ -80,7 +82,6 @@
             </c:forEach>
         </table>
     </div>
-
 
 </div>
 </body>

@@ -65,6 +65,10 @@
                             <c:param name="action" value="/delete"/>
                             <c:param name="id" value="${temp.id}"/>
                         </c:url>">Cancella</a>
+                        <a href="<c:url value="AutoServlet">
+                            <c:param name="action" value="/view"/>
+                            <c:param name="id" value="${temp.id}"/>
+                        </c:url>">Visualizza prenotazioni</a>
                     </th>
                 </tr>
                 </c:forEach>
