@@ -31,7 +31,6 @@ public class FilterServlet extends HttpServlet {
             request.setAttribute("result", filterDAO.getCognome());
         else if (parameter.equals("Email"))
             request.setAttribute("result", filterDAO.getEmail());
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
         dispatcher.forward(request, response);
 
