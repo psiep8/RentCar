@@ -12,16 +12,22 @@ import java.util.List;
 
 public class FilterDAO {
 
-    public List<String> getNome() {
+    public List<String> getColumn(String campo, String filter) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             //transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Utente> criteriaQuery = criteriaBuilder.createQuery(Utente.class);
             Root<Utente> root = criteriaQuery.from(Utente.class);
-            criteriaQuery.select(root.get("nome"));
+            if (campo.equals("Nome"))
+                criteriaQuery.select(root).where(criteriaBuilder.like(root.get("nome"), filter));
+            else if (campo.equals("Cognome"))
+                criteriaQuery.select(root).where(criteriaBuilder.like(root.get("cognome"), filter));
+            else if (campo.equals("Email"))
+                criteriaQuery.select(root).where(criteriaBuilder.like(root.get("email"), filter));
             Query query = session.createQuery(criteriaQuery);
-            List<String> nomi = query.getResultList();
-            return nomi;
+
+            List<String> list = query.getResultList();
+            return list;
 
             // transaction.commit();
         } catch (Exception e) {

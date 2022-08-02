@@ -27,35 +27,22 @@
     </h1>
     <div align="center">
         <table border="1" cellpadding="5">
-            <form action="FilterServlet" method="GET">
+            <form action="FilterServlet" method="POST">
                 <tr>
                     Campo per il filtraggio:
-                    <input type="checkbox" name="column" value="Nome">Nome
-                    <input type="checkbox" name="column" value="Cognome">Cognome
-                    <input type="checkbox" name="column" value="Email">Email
-                    <input type="submit" value="Filtra">
+                    <select name="parametri">
+                        <option value="Nome">Nome
+                        <option value="Cognome">Cognome
+                        <option value="Email">Email
+                    </select>
+                    Testo da cercare:<input type="text" name="text">
+                    <input type="submit" name="Cerca">
                     <br/><br/>
+
                 </tr>
                 </br></br>
             </form>
-            <form method="POST" action="FilterServlet">
 
-                <input type="search" name="search-input" placeholder="Filtra qui...">
-                <input type="submit" value="Esegui">
-                </br></br>
-
-                <c:forEach var="temp" items="${result}">
-                    <c:out value="${temp}"/>
-                    <%
-                        String token = request.getParameter("token");
-                    %>
-                    <c:if test="${fn:contains(temp,token)}"> </c:if>
-                    <c:url value="UtenteServlet">
-                        <c:param name="action" value="/filtered"/>
-                    </c:url>
-                </c:forEach>
-
-            </form>
 
             <tr>
                 <th>ID</th>

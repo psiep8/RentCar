@@ -24,24 +24,17 @@ public class FilterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        String parameter = request.getParameter("column");
-        if (parameter.equals("Nome"))
-            request.setAttribute("result", filterDAO.getNome());
-        else if (parameter.equals("Cognome"))
-            request.setAttribute("result", filterDAO.getCognome());
-        else if (parameter.equals("Email"))
-            request.setAttribute("result", filterDAO.getEmail());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
-        dispatcher.forward(request, response);
+
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        String parameter = request.getParameter("search-input");
-        request.setAttribute("token", parameter);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+        String parameter = request.getParameter("parametri");
+        String text = request.getParameter("text");
+        request.setAttribute("column", filterDAO.getColumn(parameter, text));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("UtenteServlet");
         dispatcher.forward(request, response);
 
     }
