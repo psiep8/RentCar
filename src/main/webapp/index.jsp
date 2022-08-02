@@ -22,6 +22,6 @@
 </div>
 
 
-<!--<a href="hello-servlet">Hello Servlet</a>-->
+<a href="hello-servlet">Hello Servlet</a>
 </body>
 </html>

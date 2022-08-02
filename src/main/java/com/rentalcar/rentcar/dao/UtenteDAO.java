@@ -1,6 +1,7 @@
 package com.rentalcar.rentcar.dao;
 
 
+import com.rentalcar.rentcar.entity.Auto;
 import com.rentalcar.rentcar.entity.Prenotazione;
 import com.rentalcar.rentcar.entity.Utente;
 import com.rentalcar.rentcar.util.HibernateUtil;
@@ -10,6 +11,9 @@ import org.hibernate.Transaction;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -92,6 +96,26 @@ public class UtenteDAO {
             transaction = session.beginTransaction();
             // get an user object
             user = session.get(Utente.class, id);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public Utente getUser(String nome) {
+
+        Transaction transaction = null;
+        Utente user = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            user = session.get(Utente.class, nome);
             // commit transaction
             transaction.commit();
         } catch (Exception e) {

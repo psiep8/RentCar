@@ -49,6 +49,7 @@ public class PrenotazioneServlet extends HttpServlet {
                 case"/listauto":
                     listAuto(request,response);
                     break;
+
                 default:
                     listPrenotazioni(request, response);
                     break;
@@ -57,6 +58,8 @@ public class PrenotazioneServlet extends HttpServlet {
             throw new ServletException(ex);
         }
     }
+
+
 
     private void listAuto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Auto> auto = autoDAO.getAuto();

@@ -26,6 +26,10 @@
 <body>
 <div align="center">
     <form action="PrenotazioneServlet" method="get">
+        <input type="search" name="search-date" placeholder="Inserisci data">
+        <input type="submit" value="Cerca" name="action">
+        </br></br>
+
         <input type="submit" value="/new" name="action">
         </br></br>
         <h1 align="center">Lista prenotazioni:
