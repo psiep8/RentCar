@@ -4,38 +4,45 @@ import com.rentalcar.rentcar.dao.AutoDAO;
 import com.rentalcar.rentcar.dao.PrenotazioneDAO;
 import com.rentalcar.rentcar.dao.UtenteDAO;
 import com.rentalcar.rentcar.entity.Auto;
-import com.rentalcar.rentcar.entity.Prenotazione;
-import com.rentalcar.rentcar.entity.Utente;
+import com.rentalcar.rentcar.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
-    private String message;
+    @PersistenceContext(unitName = "OCDPU")
+    //private EntityManager em;
 
     public void init() {
-        message = "Hello Worldd!";
+        //UtenteDAO utenteDAO = new UtenteDAO();
+        //System.out.println(utenteDAO.getID());
 
+        /*try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            //transaction = session.beginTransaction();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Auto> criteriaQuery = criteriaBuilder.createQuery(Auto.class);
+            Root<Auto> root = criteriaQuery.from(Auto.class);
+            criteriaQuery.select(root.get("id"));
+            Query query = session.createQuery(criteriaQuery);
+            List<Integer> auto = query.getResultList();
 
-        UtenteDAO utenteDAO = new UtenteDAO();
-        Utente utente = new Utente();
-
-        //utenteDAO.saveUtente(new Utente("Giuseppe", "Romagnoli", "gr@gmail.com", "3271797913", LocalDate.of(1990, 7, 20), true));
-        //utenteDAO.saveUtente(new Utente("Danilo", "Petta", "dp@gmail.com", "3271812006", LocalDate.of(1998, 02, 17), true));
-
-        //utenteDAO.deleteUtente(utente.getId());
-
-        /*UtenteDAO utenteDAO = new UtenteDAO();
-        for (Utente temp : utenteDAO.getUtenti()) {
-            System.out.println(temp.getNome());
-        }
-
-        System.out.println(utenteDAO.getUtenteById(1));*/
-
+            for (Integer tempAuto : auto) {
+                System.out.println(tempAuto);
+            }
+            // transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,13 +51,13 @@ public class HelloServlet extends HttpServlet {
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
+        out.println("<h1>" + "message" + "</h1>");
         out.println("</body></html>");
 
         UtenteDAO utenteDAO = new UtenteDAO();
         //utenteDAO.saveUtente(new Utente("Giuseppe", "Romagnoli", "gr@gmail.com", "3271797913", LocalDate.of(1990, 7, 20), true));
-        utenteDAO.saveUtente(new Utente("Danilo", "Petta", "dp@gmail.com", "3271812006", LocalDate.of(1998, 2, 17), true));
-        utenteDAO.saveUtente(new Utente("Gabriele", "Diodato", "gp@gmail.com", "23139032", LocalDate.of(1999, 8, 20), true));
+        //utenteDAO.saveUtente(new Utente("Danilo", "Petta", "dp@gmail.com", "3271812006", LocalDate.of(1998, 2, 17), true));
+        // utenteDAO.saveUtente(new Utente("Gabriele", "Diodato", "gp@gmail.com", "23139032", LocalDate.of(1999, 8, 20), true));
 
         PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAO();
         //prenotazioneDAO.savePrenotazione(new Prenotazione(LocalDate.of(2022, 05, 20), LocalDate.of(2022, 05, 30), true));

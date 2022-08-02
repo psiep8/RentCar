@@ -47,6 +47,9 @@ public class UtenteServlet extends HttpServlet {
                 case "/view":
                     listPrenotazioni(request, response);
                     break;
+                case"/filtered":
+                    filteredUtente(request,response);
+                    break;
                 default:
                     listUser(request, response);
                     break;
@@ -54,6 +57,14 @@ public class UtenteServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void filteredUtente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nome = request.getParameter("token");
+        utenteDAO.getUser(nome);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+        dispatcher.forward(request, response);
+
     }
 
     // @Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
