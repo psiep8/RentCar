@@ -26,47 +26,54 @@
 <body>
 <div align="center">
     <form action="PrenotazioneServlet" method="get">
-        <input type="search" name="search-date" placeholder="Inserisci data">
-        <input type="submit" value="Cerca" name="action">
-        </br></br>
+
 
         <input type="submit" value="/new" name="action">
         </br></br>
-        <h1 align="center">Lista prenotazioni:
-        </h1>
-        <div align="center">
+    </form>
 
+    <h1 align="center">Lista prenotazioni:
+    </h1>
+    <div align="center">
+        <form action="FilterDateServlet" method="POST">
+            <tr>
+                Data da cercare:<input type="text" name="text">
+                <input type="submit" name="Cerca">
+                <br/><br/>
 
-            <table border="1" cellpadding="5">
-                <tr>
-                    <th>ID</th>
-                    <th>Data Inizio</th>
-                    <th>Data Fine</th>
-                    <th>Operazioni</th>
-                </tr>
+            </tr>
+            </br></br>
+        </form>
 
-                <tr>
-                    <c:forEach var="pren" items="${prenotazioni}">
-                    <th><c:out value="${pren.id}"/></th>
-                    <th><c:out value="${pren.dataInizio}"/></th>
-                    <th><c:out value="${pren.dataFine}"/></th>
-                    <th>
-                        <a href="<c:url value="PrenotazioneServlet">
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>ID</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                <th>Operazioni</th>
+            </tr>
+
+            <tr>
+                <c:forEach var="pren" items="${prenotazioni}">
+                <th><c:out value="${pren.id}"/></th>
+                <th><c:out value="${pren.dataInizio}"/></th>
+                <th><c:out value="${pren.dataFine}"/></th>
+                <th>
+                    <a href="<c:url value="PrenotazioneServlet">
                             <c:param name="action" value="/edit"/>
                             <c:param name="id" value="${pren.id}"/>
                         </c:url>"> Modifica</a>
-                        <a href="<c:url value="PrenotazioneServlet">
+                    <a href="<c:url value="PrenotazioneServlet">
                             <c:param name="action" value="/delete"/>
                             <c:param name="id" value="${pren.id}"/>
                             <c:param name="dataInizio" value="${pren.dataInizio}"/>
                         </c:url>"> Cancella</a>
-                    </th>
-                </tr>
-                </c:forEach>
-            </table>
-        </div>
+                </th>
+            </tr>
+            </c:forEach>
+        </table>
+    </div>
 
-    </form>
 </div>
 </body>
 </html>

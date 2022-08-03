@@ -1,9 +1,7 @@
 package com.rentalcar.rentcar.entity;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "utente")

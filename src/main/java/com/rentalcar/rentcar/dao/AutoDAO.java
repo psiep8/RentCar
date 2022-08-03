@@ -1,7 +1,6 @@
 package com.rentalcar.rentcar.dao;
 
 import com.rentalcar.rentcar.entity.Auto;
-import com.rentalcar.rentcar.entity.Utente;
 import com.rentalcar.rentcar.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -48,7 +47,6 @@ public class AutoDAO {
     }
 
     public Auto getAuto(int id) {
-
         Transaction transaction = null;
         Auto auto = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

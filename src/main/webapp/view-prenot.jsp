@@ -24,24 +24,47 @@
     <form action="UtenteServlet" method="get">
         <h1 align="center"><b>Lista prenotazioni:</b></h1>
         </br></br>
-        <table border="1" cellpadding="5">
-            <tr>
-                <th>ID</th>
-                <th>Data Inizio</th>
-                <th>Data Fine</th>
-            </tr>
-
-            <tr>
-                <c:forEach var="pren" items="${list}">
-                <th><c:out value="${pren.id}"/></th>
-                <th><c:out value="${pren.dataInizio}"/></th>
-                <th><c:out value="${pren.dataFine}"/></th>
-            </tr>
-            </c:forEach>
-        </table>
-
-
     </form>
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>ID</th>
+            <th>Data Inizio</th>
+            <th>Data Inizio</th>
+            <th>Customer</th>
+            <th>Veicolo</th>
+            <th>Approvazione</th>
+
+        </tr>
+
+        <tr>
+            <c:forEach var="pren" items="${list}">
+            <th><c:out value="${pren.id}"/></th>
+            <th><c:out value="${pren.dataInizio}"/></th>
+            <th><c:out value="${pren.dataFine}"/></th>
+            <th><c:out value="${pren.utente.nome}"/>
+                <c:out value="${pren.utente.cognome}"/></th>
+            <th><c:out value="${pren.auto.marca}"/>
+                <c:out value="${pren.auto.marca}"/></th>
+            <th>
+
+                <form action="UtenteServlet" method="POST">
+                    <input type="hidden" name="idP" value="${pren.id}">
+                    <select name="approvazione">
+                        <option value="Si">Sì
+                        <option value="No">No
+                    </select>
+                    <input type="submit" value="vai">
+                </form>
+            </th>
+
+
+        </tr>
+        </c:forEach>
+        </form>
+    </table>
+
+
 </div>
 </body>
 </html>

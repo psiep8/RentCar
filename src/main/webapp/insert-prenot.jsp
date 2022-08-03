@@ -54,14 +54,6 @@
                 </td>
             </tr>
             <tr>
-                <th>Approvata:</th>
-                <td>
-                    <input type="text" name="customer" size="10"
-                           value="<c:out value='${prenot.customer}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
                 <td colspan="2" align="center">
                     <input type="submit" value="/insert" name="action" onclick="alert('Inserimento prenotazione effettuata')"/>
                 </td>

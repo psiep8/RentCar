@@ -40,7 +40,7 @@
                 <td>
                     <input type="text" name="id" size="45"
                            value="<c:out value='${user.id}' />"
-                    />
+                           readonly/>
                 </td>
             </tr>
             <tr>

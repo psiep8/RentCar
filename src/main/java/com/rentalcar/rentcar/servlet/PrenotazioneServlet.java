@@ -4,7 +4,6 @@ import com.rentalcar.rentcar.dao.AutoDAO;
 import com.rentalcar.rentcar.dao.PrenotazioneDAO;
 import com.rentalcar.rentcar.entity.Auto;
 import com.rentalcar.rentcar.entity.Prenotazione;
-import com.rentalcar.rentcar.entity.Utente;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -12,7 +11,6 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -87,7 +85,6 @@ public class PrenotazioneServlet extends HttpServlet {
             //dao getbyid , controllo prenotazione non nulla, controllo data prenotazione almeno da due giorni, deletebyid
             prenotazioneDAO.deletePrenotazione(id);
             response.sendRedirect("PrenotazioneServlet");
-
         } else {
             throw new IOException("Errore, non è possibile cancellare entro due giorni dalla prenotazione");
         }

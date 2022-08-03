@@ -4,7 +4,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -23,10 +22,11 @@ public class LoginServlet extends HttpServlet {
 
         if (username.equals("admin") && password.equals("admin"))
             response.sendRedirect("UtenteServlet");
-        else if(username.equals("admin") && !password.equals("admin"))
+        else if (username.equals("admin") && !password.equals("admin"))
+            response.sendRedirect("Error.jsp");
+        else if (username == null || password == null)
             response.sendRedirect("Error.jsp");
         else response.sendRedirect("PrenotazioneServlet");
-
 
 
     }

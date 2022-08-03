@@ -1,17 +1,14 @@
 package com.rentalcar.rentcar.servlet;
 
+import com.rentalcar.rentcar.dao.PrenotazioneDAO;
 import com.rentalcar.rentcar.dao.UtenteDAO;
 import com.rentalcar.rentcar.entity.Prenotazione;
 import com.rentalcar.rentcar.entity.Utente;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import javax.transaction.Transactional;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +17,8 @@ import java.util.List;
 public class UtenteServlet extends HttpServlet {
 
     private UtenteDAO utenteDAO = new UtenteDAO();
+    private PrenotazioneDAO prenotazioneDAO = new PrenotazioneDAO();
+    private Prenotazione prenotazione = new Prenotazione();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -78,7 +77,6 @@ public class UtenteServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("edit-form.jsp");
         request.setAttribute("user", existingUser);
         dispatcher.forward(request, response);
-
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -99,17 +97,13 @@ public class UtenteServlet extends HttpServlet {
         String telefono = request.getParameter("telefono");
         String date = request.getParameter("date");
         boolean customer = Boolean.parseBoolean(request.getParameter("customer"));
-        if (id==null){
+        if (id == null) {
             Utente utente = new Utente(nome, cognome, email, telefono, LocalDate.parse(date), customer);
             utenteDAO.updateUtente(utente);
-            response.sendRedirect("UtenteServlet");
-        }else{
+        } else {
             Utente utente = new Utente(id, nome, cognome, email, telefono, LocalDate.parse(date), customer);
             utenteDAO.updateUtente(utente);
-            response.sendRedirect("UtenteServlet");
         }
-        Utente utente = new Utente(id, nome, cognome, email, telefono, LocalDate.parse(date), customer);
-        utenteDAO.updateUtente(utente);
         response.sendRedirect("UtenteServlet");
     }
 
@@ -120,9 +114,21 @@ public class UtenteServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        boolean approvata = Boolean.parseBoolean(request.getParameter("approvazione"));
+        prenotazione = prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP")));
+
+        if (approvata) {
+            prenotazione.setApprovata(true);
+            prenotazioneDAO.savePrenotazione(prenotazione);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            prenotazioneDAO.deletePrenotazione(prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP"))).getId());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
+            dispatcher.forward(request, response);
+
+        }
     }
 }

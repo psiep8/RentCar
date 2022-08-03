@@ -27,20 +27,6 @@
         </h1>
         <div align="center">
             <table border="1" cellpadding="5">
-                <tr>
-                    Campo per il filtraggio: <select>
-                    <option>ID</option>
-                    <option>Nome</option>
-                    <option>Cognome</option>
-                    <option>Email</option>
-                    <option>Telefono</option>
-                    <option>Data di Nascita</option>
-
-                </select>
-                    <input type="search" id="search-input" placeholder="Filtra qui...">
-                    <button id="search">Cerca</button>
-
-                </tr>
                 </br></br>
                 <tr>
                     <th>ID</th>

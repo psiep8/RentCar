@@ -36,9 +36,9 @@
             <tr>
                 <th>ID:</th>
                 <td>
-                    <input type="text" name="id" size="10"
+                    <input type="text" name="dataInizio" size="15"
                            value="<c:out value='${prenot.id}' />"
-                    />
+                           readonly/>
                 </td>
             </tr>
             <tr>

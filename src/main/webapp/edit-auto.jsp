@@ -40,7 +40,7 @@
                 <td>
                     <input type="text" name="id" size="10"
                            value="<c:out value='${autoex.id}' />"
-                    />
+                           readonly/>
                 </td>
             </tr>
             <tr>

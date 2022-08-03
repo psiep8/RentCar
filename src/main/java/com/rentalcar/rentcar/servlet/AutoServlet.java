@@ -1,21 +1,14 @@
 package com.rentalcar.rentcar.servlet;
 
 import com.rentalcar.rentcar.dao.AutoDAO;
-import com.rentalcar.rentcar.dao.UtenteDAO;
 import com.rentalcar.rentcar.entity.Auto;
 import com.rentalcar.rentcar.entity.Prenotazione;
-import com.rentalcar.rentcar.entity.Utente;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import javax.transaction.Transactional;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 @WebServlet(name = "AutoServlet", value = "/AutoServlet")
@@ -79,7 +72,6 @@ public class AutoServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("edit-auto.jsp");
         request.setAttribute("autoex", existingAuto);
         dispatcher.forward(request, response);
-
     }
 
     private void deleteAuto(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -100,12 +92,11 @@ public class AutoServlet extends HttpServlet {
         if (id == null) {
             Auto auto = new Auto(marca, cilindrata, modello);
             autoDAO.updateAuto(auto);
-            response.sendRedirect("AutoServlet");
         } else {
             Auto auto = new Auto(id, marca, cilindrata, modello);
             autoDAO.updateAuto(auto);
-            response.sendRedirect("AutoServlet");
         }
+        response.sendRedirect("AutoServlet");
     }
 
     private void listAuto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

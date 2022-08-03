@@ -1,6 +1,4 @@
 package com.rentalcar.rentcar.entity;
-
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
