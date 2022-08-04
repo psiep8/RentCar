@@ -25,7 +25,7 @@
 
 <div align="center">
 
-    <form action="AutoServlet" method="GET">
+    <form action="AutoServlet" method="POST">
 
         <table border="1" cellpadding="5">
             <caption>

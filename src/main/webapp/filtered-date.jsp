@@ -22,7 +22,7 @@
 <body>
 <div align="center">
     <form action="FilterDateServlet" method="POST">
-        <h1 align="center"><b>Lista prenotazioni:</b></h1>
+        <h1 align="center"><b>Lista auto:</b></h1>
         </br></br>
         <table border="1" cellpadding="5">
             <tr>
@@ -31,7 +31,7 @@
                 <th>Modello</th>
             </tr>
             <tr>
-                <c:forEach var="pren" items="${result}">
+                <c:forEach var="pren" items="${list}">
                 <th><c:out value="${pren.auto.marca}"/></th>
                 <th><c:out value="${pren.auto.cilindrata}"/></th>
                 <th><c:out value="${pren.auto.modello}"/></th>

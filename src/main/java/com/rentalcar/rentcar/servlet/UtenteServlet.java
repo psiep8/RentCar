@@ -31,15 +31,8 @@ public class UtenteServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
-                case "/delete":
-                    deleteUser(request, response);
-                    break;
                 case "/edit":
                     showEditForm(request, response);
-                    break;
-                case "/insert":
-                case "/update":
-                    upsertUser(request, response);
                     break;
                 case "/view":
                     listPrenotazioni(request, response);
@@ -53,8 +46,22 @@ public class UtenteServlet extends HttpServlet {
         }
     }
 
+    private void approvata(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        boolean approvata = Boolean.parseBoolean(request.getParameter("approvazione"));
+        prenotazione = prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP")));
+        if (approvata == false) {
+            prenotazione.setApprovata(true);
+            prenotazioneDAO.savePrenotazione(prenotazione);
+            //prenotazioneDAO.getPrenotazioni();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            prenotazioneDAO.deletePrenotazione(prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP"))).getId());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
 
-    // @Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     private void listPrenotazioni(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Utente utente = utenteDAO.getUser(id);
@@ -116,18 +123,26 @@ public class UtenteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean approvata = Boolean.parseBoolean(request.getParameter("approvazione"));
-        prenotazione = prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP")));
-        if (approvata == false) {
-            prenotazione.setApprovata(true);
-            prenotazioneDAO.savePrenotazione(prenotazione);
-            //prenotazioneDAO.getPrenotazioni();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            prenotazioneDAO.deletePrenotazione(prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP"))).getId());
-            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
-            dispatcher.forward(request, response);
+        String action = "";
+        if (request.getParameter("action") != null) {
+            action = request.getParameter("action");
         }
+        try {
+            switch (action) {
+                case "/delete":
+                    deleteUser(request, response);
+                    break;
+                case "/approvata":
+                    approvata(request, response);
+                    break;
+                case "/insert":
+                case "/update":
+                    upsertUser(request, response);
+                    break;
+            }
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
+        }
+
     }
 }

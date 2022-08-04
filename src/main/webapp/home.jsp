@@ -26,8 +26,6 @@
 <body>
 <div align="center">
     <form action="PrenotazioneServlet" method="get">
-
-
         <input type="submit" value="/new" name="action">
         </br></br>
     </form>
@@ -37,7 +35,8 @@
     <div align="center">
         <form action="FilterDateServlet" method="POST">
             <tr>
-                Data da cercare:<input type="text" name="text">
+                Data da cercare:<input type="inizio" name="inizio">
+                Data da cercare:<input type="fine" name="fine">
                 <input type="submit" name="Cerca">
                 <br/><br/>
 
@@ -52,25 +51,27 @@
                 <th>Data Fine</th>
                 <th>Operazioni</th>
             </tr>
+            <form action="UtenteServlet" method="POST">
 
-            <tr>
-                <c:forEach var="pren" items="${prenotazioni}">
-                <th><c:out value="${pren.id}"/></th>
-                <th><c:out value="${pren.dataInizio}"/></th>
-                <th><c:out value="${pren.dataFine}"/></th>
-                <th>
-                    <a href="<c:url value="PrenotazioneServlet">
+                <tr>
+                    <c:forEach var="pren" items="${prenotazioni}">
+                    <th><c:out value="${pren.id}"/></th>
+                    <th><c:out value="${pren.dataInizio}"/></th>
+                    <th><c:out value="${pren.dataFine}"/></th>
+                    <th>
+                        <a href="<c:url value="PrenotazioneServlet">
                             <c:param name="action" value="/edit"/>
                             <c:param name="id" value="${pren.id}"/>
                         </c:url>"> Modifica</a>
-                    <a href="<c:url value="PrenotazioneServlet">
+                        <a href="<c:url value="PrenotazioneServlet">
                             <c:param name="action" value="/delete"/>
                             <c:param name="id" value="${pren.id}"/>
                             <c:param name="dataInizio" value="${pren.dataInizio}"/>
                         </c:url>"> Cancella</a>
-                </th>
-            </tr>
-            </c:forEach>
+                    </th>
+                </tr>
+                </c:forEach>
+            </form>
         </table>
     </div>
 

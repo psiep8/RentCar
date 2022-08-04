@@ -55,31 +55,32 @@
                 <th>Data Di Nascita</th>
                 <th>Operazioni</th>
             </tr>
-
-            <tr>
-                <c:forEach var="user" items="${utenti}">
-                <th><c:out value="${user.id}"/></th>
-                <th><c:out value="${user.nome}"/></th>
-                <th><c:out value="${user.cognome}"/></th>
-                <th><c:out value="${user.email}"/></th>
-                <th><c:out value="${user.telefono}"/></th>
-                <th><c:out value="${user.dataNascita}"/></th>
-                <th>
-                    <a href="<c:url value="UtenteServlet">
+            <form action="UtenteServlet" method="POST">
+                <tr>
+                    <c:forEach var="user" items="${utenti}">
+                    <th><c:out value="${user.id}"/></th>
+                    <th><c:out value="${user.nome}"/></th>
+                    <th><c:out value="${user.cognome}"/></th>
+                    <th><c:out value="${user.email}"/></th>
+                    <th><c:out value="${user.telefono}"/></th>
+                    <th><c:out value="${user.dataNascita}"/></th>
+                    <th>
+                        <a href="<c:url value="UtenteServlet">
                             <c:param name="action" value="/edit"/>
                             <c:param name="id" value="${user.id}"/>
                         </c:url>">Modifica</a>
-                    <a href="<c:url value="UtenteServlet">
+                        <a href="<c:url value="UtenteServlet">
                             <c:param name="action" value="/delete"/>
                             <c:param name="id" value="${user.id}"/>
                         </c:url>">Cancella</a>
-                    <a href="<c:url value="UtenteServlet">
+                        <a href="<c:url value="UtenteServlet">
                             <c:param name="action" value="/view"/>
                             <c:param name="id" value="${user.id}"/>
                         </c:url>">Visualizza prenotazioni</a>
-                </th>
-            </tr>
-            </c:forEach>
+                    </th>
+                </tr>
+                </c:forEach>
+            </form>
         </table>
     </div>
 

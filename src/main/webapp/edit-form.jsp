@@ -25,7 +25,7 @@
 
 <div align="center">
 
-    <form action="UtenteServlet" method="GET">
+    <form action="UtenteServlet" method="POST">
 
         <table border="1" cellpadding="5">
             <caption>

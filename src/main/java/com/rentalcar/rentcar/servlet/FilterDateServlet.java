@@ -24,16 +24,12 @@ public class FilterDateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String parameter = request.getParameter("text");
-        LocalDate date = LocalDate.parse(parameter);
-        List<Prenotazione> list = filterDateDAO.getDataRange();
-        List<Prenotazione> result = new ArrayList<>();
-        for (Prenotazione p : list) {
-            if (date.isBefore(p.getDataInizio()) || date.isAfter(p.getDataFine())) {
-                result.add(p);
-            }
-        }
-        request.setAttribute("result", result);
+        String inizio = request.getParameter("inizio");
+        String fine = request.getParameter("fine");
+        LocalDate dateInizio = LocalDate.parse(inizio);
+        LocalDate dateFine = LocalDate.parse(fine);
+        List<Prenotazione> list = filterDateDAO.getDataRange(dateInizio, dateFine);
+        request.setAttribute("list", list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("filtered-date.jsp");
         dispatcher.forward(request, response);
     }

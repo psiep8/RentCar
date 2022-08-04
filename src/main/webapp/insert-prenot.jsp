@@ -26,7 +26,7 @@
 
 <div align="center">
 
-    <form action="PrenotazioneServlet" method="GET">
+    <form action="PrenotazioneServlet" method="POST">
 
         <table border="1" cellpadding="5">
             <caption>

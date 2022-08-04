@@ -27,15 +27,8 @@ public class AutoServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
-                case "/delete":
-                    deleteAuto(request, response);
-                    break;
                 case "/edit":
                     showEditForm(request, response);
-                    break;
-                case "/insert":
-                case "/update":
-                    upsertAuto(request, response);
                     break;
                 case "/view":
                     listPrenotazioni(request, response);
@@ -109,6 +102,23 @@ public class AutoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        String action = "";
+        if (request.getParameter("action") != null) {
+            action = request.getParameter("action");
+        }
+        try {
+            switch (action) {
+                case "/delete":
+                    deleteAuto(request, response);
+                    break;
+                case "/insert":
+                case "/update":
+                    upsertAuto(request, response);
+                    break;
+            }
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
+        }
+
     }
 }

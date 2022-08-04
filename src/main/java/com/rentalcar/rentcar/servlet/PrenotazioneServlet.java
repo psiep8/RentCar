@@ -32,20 +32,12 @@ public class PrenotazioneServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
-                case "/delete":
-                    deletePrenotazione(request, response);
-                    break;
                 case "/edit":
                     showEditForm(request, response);
-                    break;
-                case "/insert":
-                case "/update":
-                    upsertPrenotazione(request, response);
                     break;
                 case "/listauto":
                     listAuto(request, response);
                     break;
-
                 default:
                     listPrenotazioni(request, response);
                     break;
@@ -54,7 +46,6 @@ public class PrenotazioneServlet extends HttpServlet {
             throw new ServletException(ex);
         }
     }
-
 
     private void listAuto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Auto> auto = autoDAO.getAuto();
@@ -118,6 +109,23 @@ public class PrenotazioneServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = "";
+        if (request.getParameter("action") != null) {
+            action = request.getParameter("action");
+        }
+        try {
+            switch (action) {
+                case "/delete":
+                    deletePrenotazione(request, response);
+                    break;
+                case "/insert":
+                case "/update":
+                    upsertPrenotazione(request, response);
+                    break;
+            }
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
+        }
 
     }
 }
