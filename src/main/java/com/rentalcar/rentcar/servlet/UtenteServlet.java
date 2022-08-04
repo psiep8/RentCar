@@ -118,17 +118,16 @@ public class UtenteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean approvata = Boolean.parseBoolean(request.getParameter("approvazione"));
         prenotazione = prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP")));
-
-        if (approvata) {
+        if (approvata == false) {
             prenotazione.setApprovata(true);
             prenotazioneDAO.savePrenotazione(prenotazione);
+            //prenotazioneDAO.getPrenotazioni();
             RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
             dispatcher.forward(request, response);
         } else {
             prenotazioneDAO.deletePrenotazione(prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP"))).getId());
             RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
             dispatcher.forward(request, response);
-
         }
     }
 }

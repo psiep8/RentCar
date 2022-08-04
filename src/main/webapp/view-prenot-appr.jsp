@@ -21,18 +21,16 @@
 </head>
 <body>
 <div align="center">
-    <form action="UtenteServlet" method="get">
+    <form action="UtenteServlet" method="POST">
         <h1 align="center"><b>Lista prenotazioni:</b></h1>
         </br></br>
         <table border="1" cellpadding="5">
             <tr>
                 <th>ID</th>
                 <th>Data Inizio</th>
-                <th>Data Inizio</th>
+                <th>Data Fine</th>
                 <th>Customer</th>
                 <th>Veicolo</th>
-                <th>Approvata</th>
-
             </tr>
 
             <tr>
@@ -43,12 +41,7 @@
                 <th><c:out value="${pren.utente.nome}"/>
                     <c:out value="${pren.utente.cognome}"/></th>
                 <th><c:out value="${pren.auto.marca}"/>
-                    <c:out value="${pren.auto.marca}"/></th>
-                <th>
-                    <c:out value="${pren.approvata}"/>
-                </th>
-
-
+                    <c:out value="${pren.auto.modello}"/></th>
             </tr>
             </c:forEach>
     </form>

@@ -30,7 +30,7 @@
         <tr>
             <th>ID</th>
             <th>Data Inizio</th>
-            <th>Data Inizio</th>
+            <th>Data Fine</th>
             <th>Customer</th>
             <th>Veicolo</th>
             <th>Approvazione</th>
@@ -45,7 +45,7 @@
             <th><c:out value="${pren.utente.nome}"/>
                 <c:out value="${pren.utente.cognome}"/></th>
             <th><c:out value="${pren.auto.marca}"/>
-                <c:out value="${pren.auto.marca}"/></th>
+                <c:out value="${pren.auto.modello}"/></th>
             <th>
 
                 <form action="UtenteServlet" method="POST">
