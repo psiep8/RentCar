@@ -3,6 +3,7 @@ package com.rentalcar.rentcar.servlet;
 import com.rentalcar.rentcar.dao.AutoDAO;
 import com.rentalcar.rentcar.dao.FilterDateDAO;
 import com.rentalcar.rentcar.dao.PrenotazioneDAO;
+import com.rentalcar.rentcar.entity.Auto;
 import com.rentalcar.rentcar.entity.Prenotazione;
 
 import javax.servlet.*;
@@ -28,7 +29,7 @@ public class FilterDateServlet extends HttpServlet {
         String fine = request.getParameter("fine");
         LocalDate dateInizio = LocalDate.parse(inizio);
         LocalDate dateFine = LocalDate.parse(fine);
-        List<Prenotazione> list = filterDateDAO.getDataRange(dateInizio, dateFine);
+        List<Auto> list = filterDateDAO.getDataRange(dateInizio, dateFine);
         request.setAttribute("list", list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("filtered-date.jsp");
         dispatcher.forward(request, response);

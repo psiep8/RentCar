@@ -21,25 +21,26 @@
 </head>
 <body>
 <div align="center">
-    <form action="FilterDateServlet" method="POST">
-        <h1 align="center"><b>Lista auto:</b></h1>
+    <form action="PrenotazioneServlet" method="GET">
+        <h1 align="center"><b>Lista auto disponibili alla prenotazione:</b></h1>
         </br></br>
         <table border="1" cellpadding="5">
             <tr>
                 <th>Marca</th>
                 <th>Cilindrata</th>
                 <th>Modello</th>
+                <th>Prenota</th>
             </tr>
             <tr>
-                <c:forEach var="pren" items="${list}">
-                <th><c:out value="${pren.auto.marca}"/></th>
-                <th><c:out value="${pren.auto.cilindrata}"/></th>
-                <th><c:out value="${pren.auto.modello}"/></th>
+                <c:forEach var="auto" items="${list}">
+                <th><c:out value="${auto.marca}"/></th>
+                <th><c:out value="${auto.cilindrata}"/></th>
+                <th><c:out value="${auto.modello}"/></th>
+                <th><input type="hidden" value="/new" name="action">
+                    <input type="submit" name="Prenota"></th>
             </tr>
             </c:forEach>
         </table>
-
-
     </form>
 </div>
 </body>

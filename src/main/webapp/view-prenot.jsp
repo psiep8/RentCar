@@ -30,7 +30,7 @@
         <tr>
             <th>ID</th>
             <th>Data Inizio</th>
-            <th>Data FineAG</th>
+            <th>Data Fine</th>
             <th>Customer</th>
             <th>Veicolo</th>
             <th>Approvazione</th>
@@ -49,10 +49,11 @@
             <th>
 
                 <form action="UtenteServlet" method="POST">
-                    <input type="hidden" value="/approvata">
+                    <input type="hidden" value="/approvata" name="action">
                     <input type="hidden" name="idP" value="${pren.id}">
+                    <input type="hidden" value="/list" name="action">
                     <select name="approvazione">
-                        <option value="Si">Sì
+                        <option value="Si">Si
                         <option value="No">No
                     </select>
                     <input type="submit" value="vai">

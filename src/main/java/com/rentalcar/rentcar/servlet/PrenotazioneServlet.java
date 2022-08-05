@@ -32,6 +32,9 @@ public class PrenotazioneServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
+                case "/delete":
+                    deletePrenotazione(request, response);
+                    break;
                 case "/edit":
                     showEditForm(request, response);
                     break;
@@ -115,9 +118,6 @@ public class PrenotazioneServlet extends HttpServlet {
         }
         try {
             switch (action) {
-                case "/delete":
-                    deletePrenotazione(request, response);
-                    break;
                 case "/insert":
                 case "/update":
                     upsertPrenotazione(request, response);

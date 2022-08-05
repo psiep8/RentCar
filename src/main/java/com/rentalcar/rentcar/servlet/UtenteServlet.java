@@ -34,6 +34,9 @@ public class UtenteServlet extends HttpServlet {
                 case "/edit":
                     showEditForm(request, response);
                     break;
+                case "/delete":
+                    deleteUser(request, response);
+                    break;
                 case "/view":
                     listPrenotazioni(request, response);
                     break;
@@ -47,18 +50,17 @@ public class UtenteServlet extends HttpServlet {
     }
 
     private void approvata(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean approvata = Boolean.parseBoolean(request.getParameter("approvazione"));
+        String approvata = request.getParameter("approvazione");
         prenotazione = prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP")));
-        if (approvata == false) {
+        if (approvata.equals("Si")) {
             prenotazione.setApprovata(true);
             prenotazioneDAO.savePrenotazione(prenotazione);
-            //prenotazioneDAO.getPrenotazioni();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("UtenteServlet");
         } else {
-            prenotazioneDAO.deletePrenotazione(prenotazioneDAO.getPrenotazione(Integer.parseInt(request.getParameter("idP"))).getId());
-            RequestDispatcher dispatcher = request.getRequestDispatcher("view-prenot-appr.jsp");
-            dispatcher.forward(request, response);
+            prenotazione.setApprovata(false);
+            prenotazioneDAO.savePrenotazione(prenotazione);
+            response.sendRedirect("UtenteServlet");
+
         }
     }
 
@@ -71,14 +73,12 @@ public class UtenteServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("insert-form.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, ServletException, IOException {
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Utente existingUser = utenteDAO.getUser(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("edit-form.jsp");
@@ -92,8 +92,7 @@ public class UtenteServlet extends HttpServlet {
         response.sendRedirect("UtenteServlet");
     }
 
-    private void upsertUser(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+    private void upsertUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         Integer id = null;
         if (request.getParameter("id") != null) {
             id = Integer.parseInt(request.getParameter("id"));
@@ -129,9 +128,6 @@ public class UtenteServlet extends HttpServlet {
         }
         try {
             switch (action) {
-                case "/delete":
-                    deleteUser(request, response);
-                    break;
                 case "/approvata":
                     approvata(request, response);
                     break;

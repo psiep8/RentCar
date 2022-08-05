@@ -30,6 +30,9 @@ public class AutoServlet extends HttpServlet {
                 case "/edit":
                     showEditForm(request, response);
                     break;
+                case "/delete":
+                    deleteAuto(request, response);
+                    break;
                 case "/view":
                     listPrenotazioni(request, response);
                     break;
@@ -108,9 +111,6 @@ public class AutoServlet extends HttpServlet {
         }
         try {
             switch (action) {
-                case "/delete":
-                    deleteAuto(request, response);
-                    break;
                 case "/insert":
                 case "/update":
                     upsertAuto(request, response);

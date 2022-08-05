@@ -25,11 +25,6 @@
 </head>
 <body>
 <div align="center">
-    <form action="PrenotazioneServlet" method="get">
-        <input type="submit" value="/new" name="action">
-        </br></br>
-    </form>
-
     <h1 align="center">Lista prenotazioni:
     </h1>
     <div align="center">
